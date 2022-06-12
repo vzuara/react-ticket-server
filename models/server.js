@@ -2,7 +2,7 @@ const express   = require('express')
 const http      = require('http')
 const socketio  = require('socket.io')
 const path      = require('path');
-const Sockets   = require('./sockets');
+const Socket   = require('./sockets');
 const cors      = require('cors')
 
 class Server {
@@ -22,7 +22,7 @@ class Server {
     }
 
     configurarSockets() {
-        new Sockets(this.io)
+        new Socket(this.io)
     }
 
     execute() {
