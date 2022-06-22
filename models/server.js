@@ -11,23 +11,25 @@ class Server {
         this.port = process.env.PORT;
 
         this.server = http.createServer(this.app)
-        this.io = socketio(this.server, {
-
-        })
+        this.io = socketio(this.server, {})
+        this.sockets = new Sockets(this.io)
     }
+
 
     middlewares() {
         this.app.use(express.static(path.resolve(__dirname, '../public')))
         this.app.use(cors())
-    }
 
-    configurarSockets() {
-        new Sockets(this.io)
+        this.app.get('/ultimos', (req, res) => {
+            res.json({
+                ok: true,
+                ultimos: this.sockets.ticketList.ultimos13
+            })
+        })
     }
 
     execute() {
         this.middlewares()
-        this.configurarSockets()
         this.server.listen(this.port, () => {
             console.log(`Server corriendo en el puerto ${this.port}`)
         })
