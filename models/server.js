@@ -2,7 +2,7 @@ const express   = require('express')
 const http      = require('http')
 const socketio  = require('socket.io')
 const path      = require('path');
-const Sockets   = require('./sockets');
+const Socket   = require('./sockets');
 const cors      = require('cors')
 
 class Server {
@@ -26,6 +26,8 @@ class Server {
                 ultimos: this.sockets.ticketList.ultimos13
             })
         })
+    configurarSockets() {
+        new Socket(this.io)
     }
 
     execute() {
